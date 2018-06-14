@@ -1,6 +1,8 @@
 const fs = require('fs');
 const svgson = require('svgson');
 
+const outputFile = "output/CORASShapes.js";
+
 function json2joint(fname, stArray) {
     
     let elementName = "coras." + fname.split(".")[0];
@@ -21,10 +23,10 @@ const svgs = files.filter((name) => /\.svg$/.test(name));
 const contents = svgs.map((svg) => fs.readFileSync(svg, 'utf-8'));
 contents.forEach((content, index) => svgson(content, { svgo: true }, json2joint(svgs[index], stArray)));
 
-fs.writeFileSync("CORASShapes.js", "function AddCorasShapes(joint) {\n");
-stArray.forEach((line) => fs.writeFileSync("CORASShapes.js", `${line}\n`, { flag: 'a' }));
-fs.writeFileSync("CORASShapes.js", '\n', { flag: 'a' });
-fs.writeFileSync("CORASShapes.js", "}\n\nexport default AddCorasShapes;\n", { flag: 'a' });
+fs.writeFileSync(outputFile, "function AddCorasShapes(joint) {\n");
+stArray.forEach((line) => fs.writeFileSync(outputFile, `${line}\n`, { flag: 'a' }));
+fs.writeFileSync(outputFile, '\n', { flag: 'a' });
+fs.writeFileSync(outputFile, "}\n\nexport default AddCorasShapes;\n", { flag: 'a' });
 
 let x = 10;
 const nameArr = [];
